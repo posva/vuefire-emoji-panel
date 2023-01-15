@@ -1,0 +1,75 @@
+:root {
+  --links: #00dc82;
+  --code: currentColor;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #4de7a8;
+  text-decoration: inherit;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+/* force emoji in specific places where the variation should always be used */
+.emoji {
+  font-family: Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji,
+    Android Emoji, EmojiSymbols, EmojiOne Mozilla, Twemoji Mozilla,
+    Segoe UI Symbol, Noto Color Emoji Compat, emoji, noto-emojipedia-fallback;
+}
+
+.message-box {
+  --border-radius: 8px;
+
+  background-color: var(--background-alt);
+  padding: 0.2em 1em;
+  padding-left: calc(var(--border-radius) + 0.75em);
+  margin: var(--border-radius) 0;
+  border-radius: var(--border-radius);
+
+  position: relative;
+}
+
+.message-box p {
+  margin: 0;
+}
+
+.message-box::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  background-color: azure;
+  width: var(--border-radius);
+  height: 100%;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.mini-avatar,
+.nav-avatar {
+  border-radius: 100%;
+  width: 2em;
+  height: 2em;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  margin-right: 0.3em;
+}
+
+.nav-avatar {
+  width: 1.5em;
+  height: 1.5em;
+  margin: -0.5em 0.1em -0.5em 0;
+  /* margin-right: 0.1em; */
+}
+
+.logo {
+  height: 1em;
+  padding: 0 0.15em;
+}
