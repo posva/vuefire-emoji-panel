@@ -1,8 +1,4 @@
-<script lang="ts" setup>
-import { signOut } from 'firebase/auth'
-const user = useCurrentUser()
-const auth = useFirebaseAuth()!
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <nav class="links">
