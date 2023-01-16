@@ -31,7 +31,7 @@ onMounted(() => {
     <footer>
       <a href="#TODO">
         <img
-          src="@/assets/github-mark.svg"
+          src="@/assets/github-logo.svg"
           alt="GitHub logo"
           class="logo github"
         />
