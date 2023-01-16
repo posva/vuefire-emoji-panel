@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /panelEmojis/{userId} {
+      allow read;
+
+      function belongsToUser() {
+        return request.auth.uid == userId;
+      }
+
+      function hasValidData() {
+        return ['createdAt', 'content', 'pos', 'revision']
+            .toSet()
+            .difference(request.resource.data.keys().toSet())
+            .size() == 0
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.pos is int
+          && request.resource.data.content is string
+          && request.resource.data.content.size() <= 2;
+      }
+
+      function hasValidUserInfo() {
+        return request.resource.data.photoURL is string
+          && request.resource.data.displayName is string;
+      }
+
+      allow create: if belongsToUser()
+        && hasValidData()
+        && hasValidUserInfo()
+        && request.resource.data.revision == 1
+      ;
+
+      allow update: if belongsToUser()
+        && hasValidData()
+        // only allow one write every 5 seconds
+        && request.time > resource.data.createdAt + duration.value(5, 's')
+        // only allow increments
+        && request.resource.data.revision == resource.data.revision + 1
+      ;
+
+      allow delete: if belongsToUser();
+    }
+
+    // disable all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
