@@ -1,10 +1,7 @@
-import { MaybeRef, useInterval, useNow } from '@vueuse/core'
+import { MaybeRef, useNow } from '@vueuse/core'
 import { Timestamp } from 'firebase/firestore'
 
 export function useRelativeTime(when: MaybeRef<Timestamp | undefined | null>) {
-  const START = Date.now()
-  const elapsedSeconds = useInterval(1000)
-
   const now = useNow()
 
   return computed(() =>
