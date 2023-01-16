@@ -23,14 +23,12 @@ export default defineNuxtConfig({
   vuefire: {
     auth: true,
     config: {
-      apiKey: 'AIzaSyDZZF0At8wUoO4CbysTQEsWvSiWHayfplA',
-      authDomain: 'project-9078095303839077050.firebaseapp.com',
-      databaseURL: 'https://project-9078095303839077050.firebaseio.com',
-      projectId: 'project-9078095303839077050',
-      storageBucket: 'project-9078095303839077050.appspot.com',
-      messagingSenderId: '283064469729',
-      appId: '1:283064469729:web:f1e771c0fa539901a20fa0',
-      measurementId: 'G-LVHS5HP5K7',
+      apiKey: 'AIzaSyBwmo761a-X3AV-2foLGWCpg2vTbrB7NjE',
+      authDomain: 'emoji-panel-test-1.firebaseapp.com',
+      projectId: 'emoji-panel-test-1',
+      storageBucket: 'emoji-panel-test-1.appspot.com',
+      messagingSenderId: '743661406627',
+      appId: '1:743661406627:web:cd491cf645094383b33216',
     },
   },
 

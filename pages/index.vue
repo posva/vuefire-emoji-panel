@@ -32,7 +32,7 @@ type PanelEmojiWithId = VueFirestoreDocumentData<PanelEmoji>
 
 const db = useFirestore()
 const user = useCurrentUser()
-const emojisRef = collection(db, 'pixels')
+const emojisRef = collection(db, 'panelEmojis')
 
 const WIDTH = 15
 const HEIGHT = 15

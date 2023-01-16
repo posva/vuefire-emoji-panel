@@ -11,7 +11,7 @@
     "@vueuse/core": "^9.10.0",
     "firebase": "^9.15.0",
     "nuxt": "^3.0.0",
-    "nuxt-vuefire": "^0.1.3",
+    "nuxt-vuefire": "^0.1.4",
     "vuefire": "^3.0.1"
   },
   "devDependencies": {
