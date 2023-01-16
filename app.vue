@@ -18,6 +18,9 @@ onMounted(() => {
     }
   })
 })
+
+// for demo purposes only
+useDomainCheck()
 </script>
 
 <template>
