@@ -10,28 +10,9 @@ const auth = useFirebaseAuth()!
       <li>
         <NuxtLink to="/">Emoji Panel</NuxtLink>
       </li>
-      <template v-if="user">
-        <li>
-          <!-- TODO: Demo this -->
-          <NuxtLink to="/login">
-            <img
-              :src="user.photoURL || `https://i.pravatar.cc/150?u=${user.uid}`"
-              referrerpolicy="no-referrer"
-              alt="user photo"
-              class="nav-avatar"
-            />
-            {{ user.displayName || 'Anonymous' }}</NuxtLink
-          >
-        </li>
-        <li>
-          <button @click="signOut(auth)">Logout</button>
-        </li>
-      </template>
-      <template v-else>
-        <li>
-          <NuxtLink to="/login">Login</NuxtLink>
-        </li>
-      </template>
+      <li>
+        <NuxtLink to="/login">Login</NuxtLink>
+      </li>
     </ul>
   </nav>
 </template>

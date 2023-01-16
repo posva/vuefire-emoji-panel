@@ -1,24 +1,4 @@
 <script lang="ts" setup>
-const user = useCurrentUser()
-const router = useRouter()
-const route = useRoute()
-
-onMounted(() => {
-  watch(user, (user, previousUser) => {
-    // user logged out
-    if (previousUser && !user) {
-      router.push('/login')
-    } else if (
-      !previousUser &&
-      user &&
-      typeof route.query.redirect === 'string'
-    ) {
-      // user logged in
-      router.push(route.query.redirect)
-    }
-  })
-})
-
 // for demo purposes only
 useDomainCheck()
 </script>

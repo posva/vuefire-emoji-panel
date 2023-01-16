@@ -9,13 +9,6 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.10.0",
-    "firebase": "^9.15.0",
-    "nuxt": "^3.0.0",
-    "nuxt-vuefire": "^0.1.4",
-    "vuefire": "^3.0.1"
-  },
-  "devDependencies": {
-    "@firebase/app-types": "^0.9.0",
-    "firebase-admin": "^11.4.1"
+    "nuxt": "^3.0.0"
   }
 }
