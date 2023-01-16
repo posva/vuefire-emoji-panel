@@ -32,7 +32,7 @@ useDomainCheck()
     <NuxtPage />
 
     <footer>
-      <a href="#TODO">
+      <a href="https://github.com/posva/vuefire-emoji-panel" rel="noreferrer">
         <img
           src="@/assets/github-logo.svg"
           alt="GitHub logo"

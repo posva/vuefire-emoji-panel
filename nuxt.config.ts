@@ -8,10 +8,6 @@ export default defineNuxtConfig({
           href: 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css',
           rel: 'stylesheet',
         },
-        // {
-        //   rel: 'stylesheet',
-        //   href: 'https://unpkg.com/@picocss/pico@1.5.6/css/pico.min.css',
-        // },
       ],
     },
   },
