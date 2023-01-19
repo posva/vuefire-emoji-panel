@@ -2,18 +2,18 @@ lockfileVersion: 5.4
 
 specifiers:
   '@firebase/app-types': ^0.9.0
-  '@vueuse/core': ^9.10.0
+  '@vueuse/core': ^9.11.0
   firebase: ^9.15.0
   firebase-admin: ^11.4.1
   nuxt: ^3.0.0
-  nuxt-vuefire: ^0.1.4
+  nuxt-vuefire: ^0.1.5
   vuefire: ^3.0.1
 
 dependencies:
-  '@vueuse/core': 9.10.0
+  '@vueuse/core': 9.11.0
   firebase: 9.15.0
   nuxt: 3.0.0
-  nuxt-vuefire: 0.1.4_gl5bzj5n2nzxp2xhu7qtoqbzcy
+  nuxt-vuefire: 0.1.5_gl5bzj5n2nzxp2xhu7qtoqbzcy
   vuefire: 3.0.1_firebase@9.15.0
 
 devDependencies:
@@ -1698,12 +1698,12 @@ packages:
     resolution: {integrity: sha512-Ewzq5Yhimg7pSztDV+RH1UDKBzmtqieXQlpTVm2AwraoRL/Rks96mvd8Vgi7Lj+h+TH8dv7mXD3FRZR3TUvbSg==}
     dev: false
 
-  /@vueuse/core/9.10.0:
-    resolution: {integrity: sha512-CxMewME07qeuzuT/AOIQGv0EhhDoojniqU6pC3F8m5VC76L47UT18DcX88kWlP3I7d3qMJ4u/PD8iSRsy3bmNA==}
+  /@vueuse/core/9.11.0:
+    resolution: {integrity: sha512-7yZJ8LNOssA8ZmeSjd4F+wbFBA4csiP4TiaXgruqg1H4PAtzSkv93PPwFLvQkSnfo3Bar+e+6QoRvWjhz7l2Xg==}
     dependencies:
       '@types/web-bluetooth': 0.0.16
-      '@vueuse/metadata': 9.10.0
-      '@vueuse/shared': 9.10.0
+      '@vueuse/metadata': 9.11.0
+      '@vueuse/shared': 9.11.0
       vue-demi: 0.13.11
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -1722,12 +1722,12 @@ packages:
       vue: 3.2.45
     dev: false
 
-  /@vueuse/metadata/9.10.0:
-    resolution: {integrity: sha512-G5VZhgTCapzU9rv0Iq2HBrVOSGzOKb+OE668NxhXNcTjUjwYxULkEhAw70FtRLMZc+hxcFAzDZlKYA0xcwNMuw==}
+  /@vueuse/metadata/9.11.0:
+    resolution: {integrity: sha512-HhtG2SWkcfZBLbamHdvLn7jKOCFpw/ifXjVTd5ilFkj98WVUk/3UTQ03wF1XIkuhSO4+b45hD2lfG9/GdKCF7w==}
     dev: false
 
-  /@vueuse/shared/9.10.0:
-    resolution: {integrity: sha512-vakHJ2ZRklAzqmcVBL38RS7BxdBA4+5poG9NsSyqJxrt9kz0zX3P5CXMy0Hm6LFbZXUgvKdqAS3pUH1zX/5qTQ==}
+  /@vueuse/shared/9.11.0:
+    resolution: {integrity: sha512-8lO7wD5abYxupKy2KynH1pSgP715ky6iCrWYb8aX2AuAVi9uHXj7qE1dw6BnmArSaLHci4x9iuzWPCpAzUkC/A==}
     dependencies:
       vue-demi: 0.13.11
     transitivePeerDependencies:
@@ -3241,6 +3241,18 @@ packages:
       inherits: 2.0.4
       minimatch: 5.1.2
       once: 1.4.0
+    dev: false
+
+  /glob/8.1.0:
+    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 5.1.6
+      once: 1.4.0
+    optional: true
 
   /globals/11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -3658,7 +3670,7 @@ packages:
       klaw: 3.0.0
       markdown-it: 12.3.2
       markdown-it-anchor: 8.6.6_2zb4u3vubltivolgu556vv4aom
-      marked: 4.2.5
+      marked: 4.2.12
       mkdirp: 1.0.4
       requizzle: 0.2.4
       strip-json-comments: 3.1.1
@@ -3965,8 +3977,8 @@ packages:
       uc.micro: 1.0.6
     optional: true
 
-  /marked/4.2.5:
-    resolution: {integrity: sha512-jPueVhumq7idETHkb203WDD4fMA3yV9emQ5vLwop58lu8bTclMghBWcYAavlDqIEMaisADinV1TooIFCfqOsYQ==}
+  /marked/4.2.12:
+    resolution: {integrity: sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==}
     engines: {node: '>= 12'}
     hasBin: true
     optional: true
@@ -4054,6 +4066,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
+    dev: false
+
+  /minimatch/5.1.6:
+    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
+    engines: {node: '>=10'}
+    dependencies:
+      brace-expansion: 2.0.1
+    optional: true
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
@@ -4313,8 +4333,8 @@ packages:
       fsevents: 2.3.2
     dev: false
 
-  /nuxt-vuefire/0.1.4_gl5bzj5n2nzxp2xhu7qtoqbzcy:
-    resolution: {integrity: sha512-NnyGFI/uvAi+mxNJC/vdFyVaWeQHwtgB/PJdVqvxGqjXD0NNVadKaM28uqEfhXg1HuToRoGmjOnP8UCjZ7uxRw==}
+  /nuxt-vuefire/0.1.5_gl5bzj5n2nzxp2xhu7qtoqbzcy:
+    resolution: {integrity: sha512-RgBytd+QjtC2LzeAcr2lPEOFmxSOsLV7Cn2jpB14qOv1/ApaHshxgGasyAyvFD8vbgn3fdJiNYqQi9gmE44VNw==}
     peerDependencies:
       '@firebase/app-types': '>=0.8.1'
       firebase: ^9.0.0
@@ -4952,7 +4972,7 @@ packages:
       escodegen: 1.14.3
       espree: 9.4.1
       estraverse: 5.3.0
-      glob: 8.0.3
+      glob: 8.1.0
       jsdoc: 3.6.11
       minimist: 1.2.7
       protobufjs: 7.1.2
