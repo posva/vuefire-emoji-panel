@@ -55,10 +55,9 @@ const emojisByPos = computed(() => {
 })
 
 const lastCreatedEmoji = computed(() => emojis.value.at(0))
-const lastCreatedEmojiCreatedAt = computed(
-  () => lastCreatedEmoji.value?.createdAt
+const lastCreationRelativeTime = useRelativeTime(
+  computed(() => lastCreatedEmoji.value?.createdAt)
 )
-const lastCreationRelativeTime = useRelativeTime(lastCreatedEmojiCreatedAt)
 
 const myEmojiRef = computed(() => user.value && doc(emojisRef, user.value.uid))
 const myEmoji = useDocument<PanelEmoji>(myEmojiRef)
