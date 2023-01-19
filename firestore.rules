@@ -20,14 +20,8 @@ service cloud.firestore {
           && request.resource.data.content.size() <= 2;
       }
 
-      function hasValidUserInfo() {
-        return request.resource.data.photoURL is string
-          && request.resource.data.displayName is string;
-      }
-
       allow create: if belongsToUser()
         && hasValidData()
-        && hasValidUserInfo()
         && request.resource.data.revision == 1
       ;
 

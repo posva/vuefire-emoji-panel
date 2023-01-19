@@ -1,4 +1,15 @@
 <script lang="ts" setup>
+const user = useCurrentUser()
+const route = useRoute()
+const router = useRouter()
+
+watch(user, (user, prevUser) => {
+  if (!user && prevUser) {
+    router.push('/login')
+  } else if (user && typeof route.query.redirect === 'string') {
+    router.push(route.query.redirect)
+  }
+})
 // for demo purposes only
 useDomainCheck()
 </script>

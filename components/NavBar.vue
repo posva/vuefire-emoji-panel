@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { signOut } from 'firebase/auth'
+const user = useCurrentUser()
+const auth = useFirebaseAuth()!
+</script>
 
 <template>
   <nav class="links">
@@ -6,7 +10,20 @@
       <li>
         <NuxtLink to="/">Emoji Panel</NuxtLink>
       </li>
-      <li>
+      <template v-if="user">
+        <li>
+          <NuxtLink to="/login">
+            <img
+              :src="user.photoURL || `https://i.pravatar.cc/150?u=${user.uid}`"
+              referrerpolicy="no-referrer"
+              class="nav-avatar"
+            />
+            {{ user.displayName || 'Anonymous' }}
+          </NuxtLink>
+        </li>
+        <li><button @click="signOut(auth)">Logout</button></li>
+      </template>
+      <li v-else>
         <NuxtLink to="/login">Login</NuxtLink>
       </li>
     </ul>

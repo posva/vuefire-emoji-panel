@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {
-  addDoc,
   collection,
   doc,
   increment,
@@ -9,26 +8,32 @@ import {
   serverTimestamp,
   setDoc,
   Timestamp,
+  updateDoc,
 } from 'firebase/firestore'
 
 useHead({
   title: 'Collaborative Emoji Art',
 })
 
+definePageMeta({
+  middleware: ['authenticated'],
+})
+
 const WIDTH = 15
 const HEIGHT = 15
 
 interface PanelEmoji {
+  id: string
   content: string
   createdAt: Timestamp
-  displayName: string
-  photoURL: string
+  displayName: string | null
+  photoURL: string | null
   pos: number
   revision: number
 }
 
 const db = useFirestore()
-const panelEmojisRef = collection(db, 'panelEmojis-test2')
+const panelEmojisRef = collection(db, 'panelEmojis')
 const user = useCurrentUser()
 
 const myEmojiRef = computed(() => {
@@ -40,6 +45,11 @@ const myEmoji = useDocument<PanelEmoji>(myEmojiRef)
 const panelEmojis = useCollection<PanelEmoji>(
   query(panelEmojisRef, orderBy('createdAt', 'asc')),
   { ssrKey: 'emojis' }
+)
+
+const mostRecentEmoji = computed(() => panelEmojis.value.at(-1))
+const mostRecentEmojiRelativeTime = useRelativeTime(
+  computed(() => mostRecentEmoji.value?.createdAt)
 )
 
 const emojisByPos = computed(() => {
@@ -54,16 +64,27 @@ const emojisByPos = computed(() => {
 const { emoji: newEmoji, randomize: randomizeEmoji } = useRandomEmoji()
 
 async function createEmoji(i: number) {
-  if (!user.value || !newEmoji.value) return
+  if (!user.value || !myEmojiRef.value || !newEmoji.value) return
 
-  await setDoc(doc(panelEmojisRef, user.value.uid), {
-    content: newEmoji.value,
-    createdAt: serverTimestamp(),
-    displayName: user.value.displayName,
-    photoURL: user.value.photoURL,
-    pos: i,
-    revision: increment(1),
-  })
+  if (myEmoji.value) {
+    // update
+    await updateDoc(myEmojiRef.value, {
+      content: newEmoji.value,
+      createdAt: serverTimestamp(),
+      revision: increment(1),
+      pos: i,
+    })
+  } else {
+    // create
+    await setDoc(myEmojiRef.value, {
+      content: newEmoji.value,
+      createdAt: serverTimestamp(),
+      revision: increment(1),
+      pos: i,
+      displayName: user.value.displayName,
+      photoURL: user.value.photoURL,
+    })
+  }
 }
 </script>
 
@@ -71,20 +92,52 @@ async function createEmoji(i: number) {
   <main>
     <h2>Emoji Panel</h2>
 
-    <div class="emoji-grid">
-      <div
+    <template v-if="user">
+      <p v-if="myEmoji">
+        Your last emoji is {{ myEmoji.content }}. You changed it
+        <strong>{{ myEmoji.revision }} times</strong>.
+      </p>
+      <p v-else>Click somewhere to add your very own emoji to the panel.</p>
+    </template>
+
+    <p>
+      There are <strong>{{ panelEmojis.length }} contributions</strong>.
+    </p>
+
+    <button class="emoji" @click="randomizeEmoji" style="font-size: 2.25rem">
+      {{ newEmoji }}
+    </button>
+
+    <ClientOnly>
+      <p v-if="mostRecentEmoji">
+        <img
+          :src="
+            mostRecentEmoji.photoURL ||
+            `https://i.pravatar.cc/150?u=${mostRecentEmoji.id}`
+          "
+          referrerpolicy="no-referrer"
+          class="mini-avatar"
+        />
+        <span>{{ mostRecentEmoji.displayName || 'Anonymous' }}</span>
+        created {{ mostRecentEmoji.content }} {{ mostRecentEmojiRelativeTime }}
+      </p>
+    </ClientOnly>
+
+    <transition-group tag="div" class="emoji-grid" name="emoji-grid">
+      <button
         class="emoji-button emoji"
+        :class="{ 'emoji-button--mine': user && emoji?.id === user.uid }"
         v-for="(emoji, i) in emojisByPos"
-        role="button"
+        :key="emoji?.id || i"
         @click="createEmoji(i)"
       >
         {{ emoji?.content }}
-      </div>
-    </div>
+      </button>
+    </transition-group>
   </main>
 </template>
 
-<style scoped>
+<style>
 .emoji-grid {
   display: grid;
   margin: 1rem 0;
@@ -104,16 +157,25 @@ async function createEmoji(i: number) {
 }
 
 .emoji-grid:hover {
+  /* resets */
   cursor: crosshair;
 }
-
 .emoji-button {
+  /* resets */
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
   border-radius: 5px;
   border: solid 1px var(--border);
+}
+
+.emoji-button:focus {
+  box-shadow: none;
 }
 
 .emoji-button--mine {
@@ -128,5 +190,32 @@ async function createEmoji(i: number) {
 }
 .emoji-button[aria-disabled='true']:hover {
   cursor: not-allowed;
+}
+
+.emoji-grid-move,
+.emoji-grid-enter-active,
+.emoji-grid-leave-active {
+  transition: all 500ms var(--ease-bezier);
+}
+.emoji-grid-enter-active {
+  z-index: 10;
+}
+.emoji-grid-move {
+  z-index: 15;
+}
+
+.emoji-grid-enter-from:not(:empty) {
+  transform: scale(3.5);
+}
+
+.emoji-grid-enter-from,
+/* both from and to to remove the leaving animation */
+.emoji-grid-leave-from,
+.emoji-grid-leave-to {
+  opacity: 0;
+}
+
+.emoji-grid-leave-active {
+  position: absolute;
 }
 </style>

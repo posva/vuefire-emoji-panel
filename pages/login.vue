@@ -12,10 +12,15 @@ useHead({
 
 const auth = useFirebaseAuth()!
 const user = useCurrentUser()
+const route = useRoute()
 </script>
 
 <template>
   <h2>Login</h2>
+
+  <div class="message-box" v-if="route.query.redirect">
+    You need to login to access <code>{{ route.query.redirect }}</code>
+  </div>
 
   <template v-if="user">
     <p>
