@@ -1,6 +1,8 @@
 :root {
   --links: #00dc82;
   --code: currentColor;
+
+  --ease-bezier: cubic-bezier(0, 0.26, 0.55, 1.18);
 }
 
 a {

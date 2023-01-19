@@ -13,7 +13,7 @@ const HEIGHT = 15
   </main>
 </template>
 
-<style scoped>
+<style>
 .emoji-grid {
   display: grid;
   margin: 1rem 0;
@@ -37,12 +37,20 @@ const HEIGHT = 15
 }
 
 .emoji-button {
+  /* resets for a button */
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
   border-radius: 5px;
   border: solid 1px var(--border);
+}
+.emoji-button:focus {
+  box-shadow: none;
 }
 
 .emoji-button--mine {
@@ -54,5 +62,32 @@ const HEIGHT = 15
 }
 .emoji-button[aria-disabled='true']:hover {
   cursor: not-allowed;
+}
+
+.emoji-grid-move,
+.emoji-grid-enter-active,
+.emoji-grid-leave-active {
+  transition: all 500ms var(--ease-bezier);
+}
+.emoji-grid-enter-active {
+  z-index: 10;
+}
+.emoji-grid-move {
+  z-index: 15;
+}
+
+.emoji-grid-enter-from:not(:empty) {
+  transform: scale(3.5);
+}
+
+.emoji-grid-enter-from,
+/* both from and to to remove the leaving animation */
+.emoji-grid-leave-from,
+.emoji-grid-leave-to {
+  opacity: 0;
+}
+
+.emoji-grid-leave-active {
+  position: absolute;
 }
 </style>
