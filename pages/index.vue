@@ -21,10 +21,11 @@ definePageMeta({
 })
 
 interface PanelEmoji {
+  id: string
   content: string
   createdAt: Timestamp
-  displayName: string
-  photoURL: string
+  displayName: string | null
+  photoURL: string | null
   pos: number
   revision: number
 }
@@ -38,7 +39,7 @@ const WIDTH = 15
 const HEIGHT = 15
 
 const emojis = useCollection<PanelEmoji>(
-  query(emojisRef, orderBy('createdAt', 'desc')),
+  query(emojisRef, orderBy('createdAt', 'asc')),
   {
     ssrKey: 'emojis',
   }
@@ -54,7 +55,7 @@ const emojisByPos = computed(() => {
   return result
 })
 
-const lastCreatedEmoji = computed(() => emojis.value.at(0))
+const lastCreatedEmoji = computed(() => emojis.value.at(-1))
 const lastCreationRelativeTime = useRelativeTime(
   computed(() => lastCreatedEmoji.value?.createdAt)
 )
@@ -120,16 +121,6 @@ async function createEmoji(pos: number) {
         {{ myEmoji.revision }} updates.
         <br />
       </template>
-
-      <template v-if="!canCreateNewEmoji">
-        You added an emoji less than 5 seconds ago. Wait a bit to create a new
-        one 😊
-      </template>
-      <template v-else>
-        Click on any box to add your very own emoji!
-        <br />
-        Click to randomize:
-      </template>
     </p>
 
     <button class="emoji" @click="generateNewContent()" style="font-size: 2rem">
@@ -144,7 +135,7 @@ async function createEmoji(pos: number) {
           lastCreatedEmoji.photoURL ||
           `https://i.pravatar.cc/150?u=${lastCreatedEmoji.id}`
         "
-        :alt="lastCreatedEmoji.displayName"
+        alt="Avatar"
       />
       created {{ lastCreatedEmoji.content }}
       <ClientOnly>
@@ -154,23 +145,30 @@ async function createEmoji(pos: number) {
       {{ lastCreatedEmoji.revision }} updates.
     </p>
 
-    <div class="emoji-grid">
-      <div
+    <transition-group tag="div" class="emoji-grid" name="emoji-grid">
+      <button
         class="emoji-button emoji"
         :class="{ 'emoji-button--mine': emoji && emoji.id === user?.uid }"
         v-for="(emoji, pos) in emojisByPos"
+        :key="emoji?.id || pos"
         @click="createEmoji(pos)"
         @mouseover="canCreateNewEmoji && (currentHover = pos)"
         @mouseleave="currentHover = -1"
         :aria-disabled="!canCreateNewEmoji"
       >
         {{ currentHover === pos ? newContent : emoji?.content }}
-      </div>
-    </div>
+      </button>
+    </transition-group>
+
+    <p v-if="!canCreateNewEmoji">
+      You added an emoji less than 5 seconds ago. Wait a bit to create a new one
+      😊
+    </p>
+    <p v-else>Click on any box to add your very own emoji!</p>
   </main>
 </template>
 
-<style scoped>
+<style>
 .emoji-grid {
   display: grid;
   margin: 1rem 0;
@@ -194,12 +192,21 @@ async function createEmoji(pos: number) {
 }
 
 .emoji-button {
+  /* resets */
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
   border-radius: 5px;
   border: solid 1px var(--border);
+}
+
+.emoji-button:focus {
+  box-shadow: none;
 }
 
 .emoji-button--mine {
@@ -209,7 +216,37 @@ async function createEmoji(pos: number) {
 .emoji-button:hover {
   background-color: var(--selection);
 }
+.emoji-button:active {
+  transform: translateY(2px);
+}
 .emoji-button[aria-disabled='true']:hover {
   cursor: not-allowed;
+}
+
+.emoji-grid-move,
+.emoji-grid-enter-active,
+.emoji-grid-leave-active {
+  transition: all 500ms var(--ease-bezier);
+}
+.emoji-grid-enter-active {
+  z-index: 10;
+}
+.emoji-grid-move {
+  z-index: 15;
+}
+
+.emoji-grid-enter-from:not(:empty) {
+  transform: scale(3.5);
+}
+
+.emoji-grid-enter-from,
+/* both from and to to remove the leaving animation */
+.emoji-grid-leave-from,
+.emoji-grid-leave-to {
+  opacity: 0;
+}
+
+.emoji-grid-leave-active {
+  position: absolute;
 }
 </style>
