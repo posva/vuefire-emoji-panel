@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   },
 
   modules: ['nuxt-vuefire'],
+  css: ['~/assets/styles.css'],
 
   vuefire: {
     auth: true,
@@ -25,6 +26,4 @@ export default defineNuxtConfig({
       appId: '1:743661406627:web:cd491cf645094383b33216',
     },
   },
-
-  css: ['~/assets/styles.css'],
 })
